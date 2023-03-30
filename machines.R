@@ -30,3 +30,60 @@ list_rl1
 names(list_rl1)
 names(list_rl1) <- c("Machine", "Stats", "LowThreshold")
 list_rl1
+
+# Extracting list components
+# [] returns list
+# [[]] will return the actual object
+# $ same as [[]] but prettier
+
+list_rl1
+list_rl1[1]
+list_rl1[[1]]
+list_rl1$Machine
+
+list_rl1[2]
+typeof(list_rl1[2])
+list_rl1[[2]]
+typeof(list_rl1[[2]])
+list_rl1$Stats
+typeof(list_rl1$Stats)
+
+# Access max utilization only
+list_rl1[[2]][3]
+
+list_rl1[3]
+list_rl1[[3]]
+list_rl1$LowThreshold
+
+# Adding list components
+list_rl1[4] <- "New Information"
+list_rl1$UnknownHours <- RL1[is.na(RL1$Utilization),"POSIXTime"]
+list_rl1
+
+# Deleting list components
+list_rl1[4] <- NULL
+list_rl1
+
+# Numeration shifted
+list_rl1[4]
+
+list_rl1$Data <- RL1
+list_rl1$AllMachines <- machine
+
+summary(list_rl1)
+
+# Subsetting
+list_rl1[[4]][1]
+
+sublist_rl1 <- list_rl1[c("Machine", "Stats")]
+sublist_rl1
+
+# Timeseries plot
+install.packages("ggplot2")
+library(ggplot2)
+
+p <- ggplot(data=machine)
+tseries <- p + geom_line(aes(x=POSIXTime, y=Utilization, color=Machine), size=1.2) + facet_grid(Machine~.) + geom_hline(yintercept = 0.9, color="Gray", size=1.2, linetype=3)
+
+list_rl1$Plot <- tseries 
+list_rl1
